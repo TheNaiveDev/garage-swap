@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Button from "./shared/Button";
-import Input from "./shared/input";
+import Input from "./shared/Input";
 import { RiSearchLine } from "@remixicon/react";
 
 export default function Navbar() {
