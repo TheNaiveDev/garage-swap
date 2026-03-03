@@ -5,7 +5,7 @@ import { RiSearchLine } from "@remixicon/react";
 
 export default function Navbar() {
   return (
-    <nav className="flex items-center justify-between px-60 py-4 font-[Inter] fixed top-0 left-0 w-full">
+    <nav className="flex items-center justify-between px-40 py-4 font-[Inter] fixed top-0 left-0 right-0 w-full bg-[#f5f0e8] z-50">
       <div className="flex items-center gap-8">
         <span className="flex items-center gap-2">
           <span className="material-symbols-outlined font-extrabold text-[#f48c25]">
@@ -24,7 +24,7 @@ export default function Navbar() {
         </Link>
       </div>
       {/* right side below */}
-      <div className="flex flex-row items-center gap-8">
+      <div className="flex flex-row items-center gap-8 pl-1">
         <Input
           placeholder="Search for an item"
           icon={<RiSearchLine color="#F48C25" />}
