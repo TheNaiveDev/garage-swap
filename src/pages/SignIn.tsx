@@ -5,6 +5,7 @@ import { RiMailFill, RiLockFill, RiUserFill } from "@remixicon/react";
 import { supabase } from "../lib/supabaseClient";
 
 export default function SignIn() {
+  const date = new Date();
   const [isSignUp, setIsSignUp] = useState<boolean>(true);
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -26,6 +27,54 @@ export default function SignIn() {
     setPassword(e.target.value);
   };
 
+  // check if the user exists - NOT MY CODE, CHATGPT CODE FOR THIS FUNCTION
+  async function ensureProfileExists(userId: string, email?: string) {
+    // Make sure email exists
+    if (!email) {
+      console.error("Cannot create profile: user has no email.");
+      return;
+    }
+
+    try {
+      // Check if profile already exists
+      const { data: existingProfile, error: fetchError } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("user_id", userId)
+        .single();
+
+      if (fetchError && fetchError.code !== "PGRST116") {
+        // PGRST116 = "row not found", safe to ignore
+        console.error("Error fetching profile:", fetchError.message);
+        return;
+      }
+
+      if (!existingProfile) {
+        //Create profile if it doesn't exist
+        const { data: profileData, error: insertError } = await supabase
+          .from("profiles")
+          .insert([
+            {
+              user_id: userId,
+              email: email,
+              username: "", // empty for now, user can set later
+              date_joined: new Date().toISOString(),
+            },
+          ]);
+
+        if (insertError) {
+          console.error("Failed to create profile:", insertError.message);
+        } else {
+          console.log("Profile created!", profileData);
+        }
+      } else {
+        console.log("Profile already exists:", existingProfile);
+      }
+    } catch (err) {
+      console.error("Unexpected error in ensureProfileExists:", err);
+    }
+  }
+
   // supabase log in / sign up functions here
   async function handleSignIn(email: string, password: string): Promise<any> {
     const { data, error } = await supabase.auth.signInWithPassword({
@@ -37,6 +86,36 @@ export default function SignIn() {
       console.log("sorry, ", error);
     } else {
       console.log(data);
+    }
+
+    if (data.user) await ensureProfileExists(data.user.id, data.user.email);
+  }
+
+  async function handleSignUp(email: string, password: string) {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+
+    if (error) {
+      console.log("sorry, ", error);
+    } else {
+      console.log("successful", data);
+    }
+
+    const { data: profileData, error: profileError } = await supabase
+      .from("profiles")
+      .insert([
+        {
+          username: username,
+          email: email,
+        },
+      ]);
+
+    if (profileError) {
+      console.log(profileError);
+    } else {
+      console.log(profileData);
     }
   }
 
@@ -91,15 +170,15 @@ export default function SignIn() {
           {isSignUp ? (
             <div className="flex flex-col gap-2">
               <label
-                htmlFor="email"
+                htmlFor="username"
                 className="text-[#334155] text-sm lg:text-base"
               >
                 Username
               </label>
               <Input
-                id="email"
-                name="email"
-                type="email"
+                id="username"
+                name="username"
+                type="text"
                 value={username}
                 onchange={(e) => userVal(e)}
                 placeholder="cookingpot237"
@@ -156,7 +235,9 @@ export default function SignIn() {
             btnBg="bg-[#F48C25]"
             onsubmit={(e) => {
               e.preventDefault();
-              handleSignIn(email, password);
+              isSignUp
+                ? handleSignUp(email, password)
+                : handleSignIn(email, password);
             }}
           />
 
