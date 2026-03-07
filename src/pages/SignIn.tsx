@@ -1,19 +1,49 @@
 import { useState } from "react";
 import BtnBig from "../components/shared/BtnBig";
 import Input from "../components/shared/Input";
-import { RiMailFill, RiLockFill } from "@remixicon/react";
+import { RiMailFill, RiLockFill, RiUserFill } from "@remixicon/react";
+import { supabase } from "../lib/supabaseClient";
 
 export default function SignIn() {
   const [isSignUp, setIsSignUp] = useState<boolean>(true);
+  const [username, setUsername] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState(" ");
 
   const setSignUp = () => {
     setIsSignUp(!isSignUp);
   };
 
+  const userVal = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(e.target.value);
+  };
+
+  const emailVal = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+
+  const passwordVal = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+
+  // supabase log in / sign up functions here
+  async function handleSignIn(email: string, password: string): Promise<any> {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      console.log("sorry, ", error);
+    } else {
+      console.log(data);
+    }
+  }
+
   return (
     <div className="min-h-screen w-screen flex flex-col lg:flex-row items-stretch">
       {/* LEFT SIDE — hidden on mobile, shown on lg+ */}
-      <div className="hidden lg:flex lg:flex-[2] flex-col justify-end p-12 bg-[url(/background.jpg)] bg-bottom-left bg-cover relative">
+      <div className="hidden lg:flex lg:flex-2 flex-col justify-end p-12 bg-[url(/background.jpg)] bg-bottom-left bg-cover relative">
         <div className="relative z-10">
           <h3 className="font-[Inter] text-8xl font-extrabold text-white text-shadow-lg">
             The neighbourly way to swap.
@@ -57,6 +87,28 @@ export default function SignIn() {
             </p>
           </div>
 
+          {/* username */}
+          {isSignUp ? (
+            <div className="flex flex-col gap-2">
+              <label
+                htmlFor="email"
+                className="text-[#334155] text-sm lg:text-base"
+              >
+                Username
+              </label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                value={username}
+                onchange={(e) => userVal(e)}
+                placeholder="cookingpot237"
+                icon={<RiUserFill color="#94A3B8" />}
+                required
+              />
+            </div>
+          ) : null}
+
           {/* Email */}
           <div className="flex flex-col gap-2">
             <label
@@ -69,6 +121,8 @@ export default function SignIn() {
               id="email"
               name="email"
               type="email"
+              value={email}
+              onchange={(e) => emailVal(e)}
               placeholder="neighbour@example.com"
               icon={<RiMailFill color="#94A3B8" />}
               required
@@ -87,6 +141,8 @@ export default function SignIn() {
               id="password"
               name="password"
               type="password"
+              value={password}
+              onchange={passwordVal}
               placeholder="Enter your password"
               icon={<RiLockFill color="#94A3B8" />}
               required
@@ -98,6 +154,10 @@ export default function SignIn() {
             text={isSignUp ? "Create Account" : "Sign In"}
             textColor="text-white"
             btnBg="bg-[#F48C25]"
+            onsubmit={(e) => {
+              e.preventDefault();
+              handleSignIn(email, password);
+            }}
           />
 
           <div className="flex items-center gap-4">

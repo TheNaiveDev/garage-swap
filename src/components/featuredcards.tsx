@@ -1,5 +1,5 @@
 // src/components/featuredcards.tsx
-import ItemCard from "./itemcards";
+import ItemCard from "./Itemcards";
 import items from "../items/items";
 
 // Sample data — replace with fetch("/api/items/") when your Django API is ready

@@ -7,6 +7,8 @@ type inputTypes = {
   required?: boolean;
   id?: string;
   name?: string;
+  value?: string;
+  onchange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 export default function Input({
   placeholder,
@@ -15,6 +17,8 @@ export default function Input({
   required,
   id,
   name,
+  value,
+  onchange,
 }: inputTypes) {
   return (
     <div className="p-2 bg-white border rounded-md border-[#F48C2520] flex items-center gap-2 shadow-xs">
@@ -26,6 +30,8 @@ export default function Input({
         required={required}
         id={id}
         name={name}
+        value={value}
+        onChange={onchange}
       />
     </div>
   );
