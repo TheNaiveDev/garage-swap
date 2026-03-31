@@ -6,6 +6,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home.tsx";
 import HowItWorks from "./pages/Howitworkspage.tsx";
 import SignIn from "./pages/SignIn.tsx";
+import Profile from "./pages/Profile.tsx";
+import ForgotPassword from "./pages/ForgotPassword.tsx";
 
 const router = createBrowserRouter([
   {

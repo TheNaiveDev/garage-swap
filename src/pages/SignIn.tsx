@@ -1,15 +1,24 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import BtnBig from "../components/shared/BtnBig";
 import Input from "../components/shared/Input";
-import { RiMailFill, RiLockFill, RiUserFill } from "@remixicon/react";
+import {
+  RiMailFill,
+  RiLockFill,
+  RiUserFill,
+  RiEyeFill,
+  RiEyeCloseFill,
+} from "@remixicon/react";
 import { supabase } from "../lib/supabaseClient";
 
 export default function SignIn() {
-  const date = new Date();
+  const navigate = useNavigate();
   const [isSignUp, setIsSignUp] = useState<boolean>(true);
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState(" ");
+  const [isPassword, setIsPassword] = useState<Boolean>(true);
+  let date_today = new Date().toISOString().split("T")[0];
 
   const setSignUp = () => {
     setIsSignUp(!isSignUp);
@@ -27,55 +36,7 @@ export default function SignIn() {
     setPassword(e.target.value);
   };
 
-  // check if the user exists - NOT MY CODE, CHATGPT CODE FOR THIS FUNCTION
-  async function ensureProfileExists(userId: string, email?: string) {
-    // Make sure email exists
-    if (!email) {
-      console.error("Cannot create profile: user has no email.");
-      return;
-    }
-
-    try {
-      // Check if profile already exists
-      const { data: existingProfile, error: fetchError } = await supabase
-        .from("profiles")
-        .select("*")
-        .eq("user_id", userId)
-        .single();
-
-      if (fetchError && fetchError.code !== "PGRST116") {
-        // PGRST116 = "row not found", safe to ignore
-        console.error("Error fetching profile:", fetchError.message);
-        return;
-      }
-
-      if (!existingProfile) {
-        //Create profile if it doesn't exist
-        const { data: profileData, error: insertError } = await supabase
-          .from("profiles")
-          .insert([
-            {
-              user_id: userId,
-              email: email,
-              username: "", // empty for now, user can set later
-              date_joined: new Date().toISOString(),
-            },
-          ]);
-
-        if (insertError) {
-          console.error("Failed to create profile:", insertError.message);
-        } else {
-          console.log("Profile created!", profileData);
-        }
-      } else {
-        console.log("Profile already exists:", existingProfile);
-      }
-    } catch (err) {
-      console.error("Unexpected error in ensureProfileExists:", err);
-    }
-  }
-
-  // supabase log in / sign up functions here
+  // log in function here
   async function handleSignIn(email: string, password: string): Promise<any> {
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
@@ -86,53 +47,59 @@ export default function SignIn() {
       console.log("sorry, ", error);
     } else {
       console.log(data);
+      navigate("/profile");
     }
-
-    if (data.user) await ensureProfileExists(data.user.id, data.user.email);
   }
-
-  async function handleSignUp(email: string, password: string) {
+  // sign up functions here
+  async function handleSignUp(
+    email: string,
+    password: string,
+    username: string,
+  ) {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        data: {
+          username: username,
+          date_joined: date_today,
+        },
+      },
     });
 
     if (error) {
-      console.log("sorry, ", error);
+      console.log("Error signing up:", error.message);
+      return;
     } else {
-      console.log("successful", data);
+      console.log("Signup successful! Profile created via trigger.");
+      navigate("/profile");
     }
+  }
 
-    const { data: profileData, error: profileError } = await supabase
-      .from("profiles")
-      .insert([
-        {
-          username: username,
-          email: email,
-        },
-      ]);
+  // handle password visibility function
+  function handlePasswordVisibility() {
+    setIsPassword(!isPassword);
+  }
 
-    if (profileError) {
-      console.log(profileError);
-    } else {
-      console.log(profileData);
-    }
+  // handle navigation
+  function handleNavigate(navigateTo: string) {
+    navigate(navigateTo);
   }
 
   return (
     <div className="min-h-screen w-screen flex flex-col lg:flex-row items-stretch">
       {/* LEFT SIDE — hidden on mobile, shown on lg+ */}
-      <div className="hidden lg:flex lg:flex-2 flex-col justify-end p-12 bg-[url(/background.jpg)] bg-bottom-left bg-cover relative">
+      <div className="hidden lg:flex lg:flex-2 flex-col justify-end p-12 bg-[url(/lay-flat.jpg)] bg-bottom-left bg-cover relative">
         <div className="relative z-10">
           <h3 className="font-[Inter] text-8xl font-extrabold text-white text-shadow-lg">
             The neighbourly way to swap.
           </h3>
-          <p className="w-2/3 text-2xl text-white text-shadow-lg">
+          <p className="w-2/3 text-2xl text-white text-shadow-lg font-[Inter]">
             Join thousands of people across the country discovering treasures
             and building community right next door.
           </p>
         </div>
-        <div className="absolute inset-0 bg-black/30"></div>
+        <div className="absolute inset-0 bg-black/50"></div>
       </div>
 
       {/* MOBILE HERO BANNER — shown only on mobile/tablet */}
@@ -209,23 +176,46 @@ export default function SignIn() {
           </div>
 
           {/* Password */}
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 relative">
             <label
               htmlFor="password"
               className="text-[#334155] text-sm lg:text-base"
             >
               Password
             </label>
-            <Input
-              id="password"
-              name="password"
-              type="password"
-              value={password}
-              onchange={passwordVal}
-              placeholder="Enter your password"
-              icon={<RiLockFill color="#94A3B8" />}
-              required
-            />
+            <div className="relative">
+              <Input
+                id="password"
+                name="password"
+                type={isPassword ? "password" : "text"}
+                value={password}
+                onchange={passwordVal}
+                placeholder="Enter your password"
+                icon={<RiLockFill color="#94A3B8" />}
+                passwordIcon={
+                  isPassword == true ? (
+                    <RiEyeCloseFill
+                      color="#94A3B8"
+                      className="absolute right-4 cursor-pointer"
+                      onClick={handlePasswordVisibility}
+                    />
+                  ) : (
+                    <RiEyeFill
+                      color="#94A3B8"
+                      className="absolute right-4 cursor-pointer "
+                      onClick={handlePasswordVisibility}
+                    />
+                  )
+                }
+                required
+              />
+            </div>
+            <div
+              className={`absolute top-0 right-0 text-[#F48C25] cursor-pointer ${isSignUp ? "hidden" : "visible"}`}
+              onClick={() => handleNavigate("/forgotpassword")}
+            >
+              forgot password?
+            </div>
           </div>
 
           {/* Submit */}
@@ -236,28 +226,10 @@ export default function SignIn() {
             onsubmit={(e) => {
               e.preventDefault();
               isSignUp
-                ? handleSignUp(email, password)
+                ? handleSignUp(email, password, username)
                 : handleSignIn(email, password);
             }}
           />
-
-          <div className="flex items-center gap-4">
-            <hr className="flex-1 text-[#64748B50]" />
-            <span className="text-sm text-[#64748B]">Or continue with</span>
-            <hr className="flex-1 text-[#64748B50]" />
-          </div>
-
-          {/* Social Buttons */}
-          <div className="flex items-center justify-between gap-3 sm:gap-4">
-            <div className="font-[Inter] flex items-center justify-center gap-2 p-2 sm:p-2.5 border rounded-md border-[#F48C2520] shadow flex-1 text-sm sm:text-base cursor-pointer hover:bg-gray-50 transition-colors">
-              <img className="max-w-5 sm:max-w-6" src="/google.png" />
-              Google
-            </div>
-            <div className="font-[Inter] flex items-center justify-center gap-2 p-2 sm:p-2.5 border rounded-md border-[#F48C2520] shadow flex-1 text-sm sm:text-base cursor-pointer hover:bg-gray-50 transition-colors">
-              <img className="max-w-5 sm:max-w-6" src="/facebook.png" />
-              Facebook
-            </div>
-          </div>
 
           {/* Toggle Sign In / Sign Up */}
           <div className="text-center text-sm sm:text-base pb-4 lg:pb-0">

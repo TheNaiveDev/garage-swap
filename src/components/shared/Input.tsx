@@ -9,6 +9,7 @@ type inputTypes = {
   name?: string;
   value?: string;
   onchange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  passwordIcon?: ReactNode;
 };
 export default function Input({
   placeholder,
@@ -19,12 +20,13 @@ export default function Input({
   name,
   value,
   onchange,
+  passwordIcon,
 }: inputTypes) {
   return (
-    <div className="p-2 bg-white border rounded-md border-[#F48C2520] flex items-center gap-2 shadow-xs">
+    <div className="p-2 bg-white border rounded-md border-[#F48C2520] flex items-center gap-2 shadow-xs relative">
       {icon}
       <input
-        className="outline-none"
+        className="outline-none flex-1 mr-10"
         type={type}
         placeholder={placeholder}
         required={required}
@@ -33,6 +35,7 @@ export default function Input({
         value={value}
         onChange={onchange}
       />
+      {passwordIcon}
     </div>
   );
 }
