@@ -1,22 +1,25 @@
-import { Outlet, Navigate } from "react-router-dom";
-import { supabase } from "../lib/supabaseClient";
-import { useEffect, useState } from "react";
+  import { Outlet, Navigate } from "react-router-dom";
+  import { supabase } from "../lib/supabaseClient";
+  import { useEffect, useState } from "react";
 
-const ProtectedRoute = () => {
-  let [user, setUser] = useState<boolean>();
+  const ProtectedRoute = () => {
+    let [user, setUser] = useState<boolean | null>(null);
 
-  useEffect(() => {
-    async function checkUser() {
-      const { data } = await supabase.auth.getSession();
-      if (data.session !== null) {
-        setUser(true);
-      } else {
-        setUser(false);
+    useEffect(() => {
+      async function checkUser() {
+        const { data } = await supabase.auth.getSession();
+        if (data.session !== null) {
+          setUser(true);
+        } else {
+          setUser(false);
+        }
       }
+      checkUser();
+    }, []);
+    if (user === null) {
+      return <div>Loading...</div>
     }
-    checkUser();
-  }, []);
-  return user ? <Outlet /> : <Navigate to="/" />;
-};
+    return user ? <Outlet /> : <Navigate to="/sign-in" />;
+  };
 
-export default ProtectedRoute;
+  export default ProtectedRoute;

@@ -53,7 +53,7 @@ const ForgotPassword = () => {
           onsubmit={() => handleEmailReset(email)}
         />
         <div
-          className="flex items-center justify-center gap-3 w-full cursor-pointer"
+          className="flex items-center justify-center gap-3 w-full cursor-pointer mt-5 text-slate-700 font-semibold"
           onClick={() => navigate("/sign-in")}
         >
           <RiArrowLeftLine color="text-slate-700" />

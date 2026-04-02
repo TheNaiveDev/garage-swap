@@ -8,7 +8,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="font-[Inter] fixed top-0 left-0 right-0 w-full bg-[#f5f0e8] z-50">
+    <nav className="font-[Inter] fixed top-0 left-0 right-0 w-full bg-[#f5f0e8] z-50 hidden">
       {/* Main bar */}
       <div className="flex items-center justify-between px-6 md:px-40 py-4">
         {/* Logo */}
