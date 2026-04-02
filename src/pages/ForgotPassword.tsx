@@ -29,13 +29,13 @@ const ForgotPassword = () => {
         <RiKeyFill color="#f48c25" size={32} />
       </div>
       <p className="text-3xl font-[Playfair_Display]">Reset Your Password</p>
-      <p className="font-[Inter] text-lg text-center w-2/3 mt-5 text-slate-700">
+      <p className="font-[Poppins] text-lg text-center w-2/3 mt-5 text-slate-700">
         Enter the email address associated with your account and we will send
         you a link to reset your password.
       </p>
       <div className="p-8 mt-5 rounded-md bg-white flex flex-col items-start gap-4 w-full">
         <label htmlFor="email" className="w-full ">
-          <span className="font-[Inter] font-semibold text-slate-700 text-sm">
+          <span className="font-[Poppins] font-semibold text-slate-700 text-sm">
             EMAIL ADDRESS
           </span>
           <Input

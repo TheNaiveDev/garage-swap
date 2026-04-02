@@ -6,7 +6,7 @@ import Ctasection from "../components/Ctasection";
 import Footer from "../components/Footer";
 export default function Home() {
   return (
-    <>
+    <div className="font-[Poppins]">
       <Navbar />
       <main>
         <Hero />
@@ -15,6 +15,6 @@ export default function Home() {
         <Ctasection />
         <Footer />
       </main>
-    </>
+    </div>
   );
 }

@@ -4,7 +4,7 @@ export default function Hero() {
       <div className="md:px-40 mx-auto flex flex-col md:flex-row items-center gap-8 md:gap-12">
         {/* Text content */}
         <div className="flex-1 space-y-4 md:space-y-5 text-center md:text-left">
-          <span className="font-bold tracking-widest text-xs uppercase bg-[#f48c2510] text-[#f48c25] w-fit px-3 py-1 rounded-full font-[Inter]">
+          <span className="font-bold tracking-widest text-xs uppercase bg-[#f48c2510] text-[#f48c25] w-fit px-3 py-1 rounded-full font-[Poppins]">
             Community First Marketplace
           </span>
           <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black text-gray-900 leading-tight">

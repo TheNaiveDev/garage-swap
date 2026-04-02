@@ -20,7 +20,7 @@ const steps: Step[] = [
 
 export default function HowItWorks() {
   return (
-    <section className="px-10 md:px-20 xl:px-30 py-20 bg-white font-[Inter]">
+    <section className="px-10 md:px-20 xl:px-30 py-20 bg-white font-[Poppins]">
       <div className="text-center mb-12">
         <h2 className="text-4xl font-bold text-slate-900">How it Works</h2>
         <p className="text-slate-500 mt-2 max-w-sm mx-auto">

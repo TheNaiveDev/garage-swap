@@ -92,10 +92,10 @@ export default function SignIn() {
       {/* LEFT SIDE — hidden on mobile, shown on lg+ */}
       <div className="hidden lg:flex lg:flex-2 flex-col justify-end p-12 bg-[url(/lay-flat.jpg)] bg-bottom-left bg-cover relative">
         <div className="relative z-10">
-          <h3 className="font-[Inter] text-8xl font-extrabold text-white text-shadow-lg">
+          <h3 className="font-[Poppins] text-8xl font-extrabold text-white text-shadow-lg">
             The neighbourly way to swap.
           </h3>
-          <p className="w-2/3 text-2xl text-white text-shadow-lg font-[Inter]">
+          <p className="w-2/3 text-2xl text-white text-shadow-lg font-[Poppins]">
             Join thousands of people across the country discovering treasures
             and building community right next door.
           </p>
@@ -121,7 +121,7 @@ export default function SignIn() {
 
       {/* RIGHT SIDE FORM */}
       <div className="flex-1 flex items-center justify-center px-6 sm:px-12 lg:px-20 py-10 lg:py-0">
-        <form className="w-full max-w-md flex flex-col gap-6 lg:gap-8 font-[Inter]">
+        <form className="w-full max-w-md flex flex-col gap-6 lg:gap-8 font-[Poppins]">
           {/* Header */}
           <div>
             <h4 className="text-3xl lg:text-4xl font-bold text-[#0F172A]">
