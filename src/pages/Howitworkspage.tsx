@@ -1,3 +1,5 @@
+import { RiCamera2Fill, RiCamera3Fill, RiCamera4Fill, RiCamera4Line, RiCameraAi2Fill, RiCameraLensAiFill, RiCameraLine, RiCameraSwitchFill, RiCommunityFill, RiHand, RiLeafFill, RiMessage2Fill, RiMessage3Fill, RiMessageAi3Fill, RiMessageFill, RiPhoneCameraFill, RiProfileFill, RiShakeHandsFill, RiSparkling2Fill, RiTeamFill, RiText } from "@remixicon/react";
+
 export default function HowItWorks(){
 return(
     <main className="flex-1">
@@ -32,7 +34,7 @@ return(
                 <div className="flex flex-col items-center text-center relative z-10">
                     <div className="bg-(--primary-shaded) text-(--primary) rounded-2xl size-20 flex items-center justify-center mb-6 group-hover:bg-(--primary) group-hover:text-white transition-all duration-300">
                         {/**camera svg goes in here */}
-                        <span className=""></span>
+                        <RiCamera2Fill className="h-10 w-10"/>
                     </div>
                     <span className="text-(--primary) uppercase font-bold text-sm tracking-widest">step 1</span>
                     <h3 className="text-xl font-bold mt-1 text-slate-900">List Your Item</h3>
@@ -43,15 +45,98 @@ return(
             <div className="flex flex-col items-center text-center relative z-10">
                     <div className="bg-(--primary-shaded) text-(--primary) rounded-2xl size-20 flex items-center justify-center mb-6 group-hover:bg-(--primary) group-hover:text-white transition-all duration-300">
                         {/**camera svg goes in here */}
-                        <span className=""></span>
+                        <RiMessageFill className="h-10 w-10"/>
                     </div>
-                    <span className="text-(--primary) uppercase font-bold text-sm tracking-widest">step 1</span>
-                    <h3 className="text-xl font-bold mt-1 text-slate-900">List Your Item</h3>
-                    <p className="text-(--text-shade) tracking-wide">Take a few clear photos, add a description, and choose if you want to sell, start a bid, or give it away for free.</p>
+                    <span className="text-(--primary) uppercase font-bold text-sm tracking-widest">step 2</span>
+                    <h3 className="text-xl font-bold mt-1 text-slate-900">Connect Locally</h3>
+                    <p className="text-(--text-shade) tracking-wide">Chat securely with interested neighbors. Arrange a convenient time and safe public place for the hand-off.</p>
                 </div>
 
-                
+                <div className="flex flex-col items-center text-center relative z-10">
+                    <div className="bg-(--primary-shaded) text-(--primary) rounded-2xl size-20 flex items-center justify-center mb-6 group-hover:bg-(--primary) group-hover:text-white transition-all duration-300">
+                        {/**camera svg goes in here */}
+                        <RiShakeHandsFill className="h-10 w-10"/>
+                    </div>
+                    <span className="text-(--primary) uppercase font-bold text-sm tracking-widest">step 3</span>
+                    <h3 className="text-xl font-bold mt-1 text-slate-900">Complete the swap</h3>
+                    <p className="text-(--text-shade) tracking-wide">Meet up, exchange items, and enjoy your new find! Leave a review to help keep the community safe and friendly.</p>
                 </div>
+
+                </div>
+        </section>
+        <section className="px-6 md:px-20 lg:px-40 py-24">
+            <div className="flex flex-col lg:flex-row items-center gap-16">
+                <div className="lg:w-1/2">
+                <h2 className="leading-tight text-4xl font-bold mb-8">Why chose<br/><span className="text-(--primary) text-4xl">GarageSwap?</span></h2>
+                <div className="space-y-8">
+                    <div className="flex gap-6">
+                        <div className="flex shrink-0 size-12 bg-(--primary-shaded) text-(--primary) rounded-full items-center justify-center">
+                            <RiTeamFill/>
+                        </div>
+                        <div>
+                            <h4 className="text-slate-900 text-lg font-bold">Community Focused</h4>
+                            <p className="text-(--text-shade)">Build stronger bonds by trading with people right in your neighborhood. It's safer and more personal.</p>
+                        </div>
+                    </div>
+
+                    <div className="flex gap-6">
+                        <div className="flex shrink-0 size-12 bg-(--primary-shaded) text-(--primary) rounded-full items-center justify-center">
+                            <RiLeafFill/>
+                        </div>
+                        <div>
+                            <h4 className="text-slate-900 text-lg font-bold">Sustainable Living</h4>
+                            <p className="text-(--text-shade)">Reduce landfill waste and lower carbon footprints by giving quality items a second life locally.</p>
+                        </div>
+                    </div>
+
+                    <div className="flex gap-6">
+                        <div className="flex shrink-0 size-12 bg-(--primary-shaded) text-(--primary) rounded-full items-center justify-center">
+                            <RiSparkling2Fill/>
+                        </div>
+                        <div>
+                            <h4 className="text-slate-900 text-lg font-bold">Pure Simplicity</h4>
+                            <p className="text-(--text-shade)">Our platform is designed to be intuitive and fast, making decluttering or treasure hunting effortless.</p>
+                        </div>
+                    </div>
+
+                </div>
+                </div>
+
+                <div className="lg:w-1/2 grid grid-cols-2 gap-4">
+                <div className="space-y-4 pt-8">
+                    <div className="rounded-2xl overflow-hidden aspect-4/5 shadow-lg bg-slate-300">
+                    <img src="children-book-set.jpg" className="w-full object-cover h-full"/>
+                    </div>
+
+                    <div className="rounded-2xl overflow-hidden aspect-square shadow-lg bg-slate-300">
+                    <img src="mid-century-lamp.jpg" className="w-full object-cover h-full"/>
+                    </div>
+                </div>
+
+                <div className="space-y-4">
+                    <div className="rounded-2xl overflow-hidden aspect-square shadow-lg bg-slate-300">
+                        <img src="mid-century-lamp.jpg" className="w-full object-cover h-full"/>
+                    </div>
+
+                     <div className="rounded-2xl overflow-hidden aspect-4/5 shadow-lg bg-slate-300">
+                        <img src="children-book-set.jpg" className="w-full object-cover h-full"/>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </section>
+
+        <section className="px-6 md:px-20 lg:px-40 py-20">
+            <div className="bg-(--primary) rounded-4xl p-12 md:p-20 text-center relative overflow-hidden shadow-2xl shadow-(--primary-shaded)">
+                <div className="absolute inset-0 opacity-10 pointer-events-none"></div>
+                <h2 className="text-4xl md:text-5xl font-black text-white relative z-10 mb-6">
+                    Ready to swap in your hood?
+                </h2>
+                <p className="text-white text-lg md:text-xl max-w-2xl mx-auto mb-10 relative z-10">
+                    Join thousands of neighbors already making their communities more sustainable and connected.
+                </p>
+                <button className="bg-white text-(--primary) px-10 py-5 rounded-xl z-10 relative font-bold shadow-xl hover:bg-slate-100 text-xl md:text-xl transition-all">Get started for free</button>
+            </div>
         </section>
     </main>
 

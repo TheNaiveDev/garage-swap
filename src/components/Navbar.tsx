@@ -8,7 +8,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="font-[Inter] fixed top-0 left-0 right-0 w-full bg-[#f5f0e8] z-50 hidden">
+    <nav className="font-[Inter] fixed top-0 left-0 right-0 w-full hidden bg-[#f5f0e8] z-50">
       {/* Main bar */}
       <div className="flex items-center justify-between px-6 md:px-40 py-4">
         {/* Logo */}
@@ -36,7 +36,7 @@ export default function Navbar() {
             How it Works
           </Link>
           <Link
-            to="/"
+            to="/start-selling"
             className="text-slate-700 font-medium hover:text-[#F48C25] transition-colors"
           >
             Start Selling
@@ -112,7 +112,7 @@ export default function Navbar() {
               How it Works
             </Link>
             <Link
-              to="/"
+              to="/start-selling"
               className="text-slate-700 font-medium py-3 px-1 hover:text-[#F48C25] transition-colors"
               onClick={() => setMenuOpen(false)}
             >

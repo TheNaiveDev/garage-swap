@@ -14,6 +14,7 @@ import Market from "./pages/authPages/Market.tsx";
 import Messages from "./pages/authPages/Messages.tsx";
 import Bids from "./pages/authPages/Bids.tsx";
 import Listings from "./pages/authPages/Listings.tsx";
+import CreateListing from "./pages/authPages/CreateListing.tsx";
 
 const router = createBrowserRouter([
   {
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
               {
                 path: "listings",
                 element: <Listings />
+              },
+              {
+                path: "listings/create",
+                element: <CreateListing />
               }
             ]
           }
