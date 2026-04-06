@@ -1,6 +1,8 @@
 import { RiLockLine } from "@remixicon/react";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
+  const navigate = useNavigate();
   return (
     <section className="w-2/3 flex justify-center flex-col gap-12 mx-auto">
       <div className="self-start w-2/3 flex flex-col gap-4">
@@ -61,7 +63,10 @@ const Profile = () => {
                 If you think your password is compromised, change it!
               </p>
             </div>
-            <div className="font-[Poppins] flex justify-end flex-1">
+            <div
+              className="font-[Poppins] flex justify-end flex-1"
+              onClick={() => navigate("/forgotpassword")}
+            >
               <span className="border px-3 py-2 rounded-md shadow-xs bg-white border-slate-300 ">
                 RESET PASSWORD
               </span>

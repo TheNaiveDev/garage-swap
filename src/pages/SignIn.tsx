@@ -47,7 +47,7 @@ export default function SignIn() {
       console.log("sorry, ", error);
     } else {
       console.log(data);
-      navigate("/profile");
+      navigate("/market/profile");
     }
   }
 

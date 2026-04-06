@@ -3,12 +3,13 @@ import { Link } from "react-router-dom";
 import Button from "./shared/Button";
 import Input from "./shared/Input";
 import { RiSearchLine, RiMenuLine, RiCloseLine } from "@remixicon/react";
+import { useLocation } from "react-router-dom";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="font-[Inter] fixed top-0 left-0 right-0 w-full bg-[#f5f0e8] z-50 hidden">
+    <nav className="font-[Inter] fixed top-0 left-0 right-0 w-full bg-[#f5f0e8] z-50 font-[Poppins]">
       {/* Main bar */}
       <div className="flex items-center justify-between px-6 md:px-40 py-4">
         {/* Logo */}
