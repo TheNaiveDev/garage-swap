@@ -1,15 +1,23 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Button from "./shared/Button";
 import Input from "./shared/Input";
 import { RiSearchLine, RiMenuLine, RiCloseLine } from "@remixicon/react";
-import { useLocation } from "react-router-dom";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
+
+  // Hide Navbar on these pages
+  const hideNavbarPaths = ["/sign-in", "/forgotpassword"];
+  const isAuthPage =
+    hideNavbarPaths.includes(location.pathname) ||
+    location.pathname.startsWith("/market");
+
+  if (isAuthPage) return null;
 
   return (
-    <nav className="font-[Inter] fixed top-0 left-0 right-0 w-full bg-[#f5f0e8] z-50 font-[Poppins]">
+    <nav className="fixed top-0 left-0 right-0 w-full bg-[#f5f0e8] z-50 font-[Poppins]">
       {/* Main bar */}
       <div className="flex items-center justify-between px-6 md:px-40 py-4">
         {/* Logo */}
@@ -88,7 +96,6 @@ export default function Navbar() {
       {/* Mobile dropdown */}
       {menuOpen && (
         <div className="md:hidden border-t border-orange-100 bg-[#f5f0e8] px-6 pb-5 flex flex-col gap-4">
-          {/* Search */}
           <div className="pt-4">
             <Input
               placeholder="Search for an item"
@@ -96,7 +103,6 @@ export default function Navbar() {
             />
           </div>
 
-          {/* Nav links */}
           <div className="flex flex-col">
             <Link
               to="/"
@@ -106,7 +112,7 @@ export default function Navbar() {
               Browse
             </Link>
             <Link
-              to="/"
+              to="/how-it-works"
               className="text-slate-700 font-medium py-3 px-1 border-b border-orange-100 hover:text-[#F48C25] transition-colors"
               onClick={() => setMenuOpen(false)}
             >
@@ -121,7 +127,6 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Auth buttons */}
           <div className="flex gap-3 pt-1">
             <Link
               to="/sign-in"
