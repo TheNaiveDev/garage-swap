@@ -8,6 +8,7 @@ import {
   RiUserFill,
   RiEyeFill,
   RiEyeCloseFill,
+  RiArrowLeftBoxFill,
 } from "@remixicon/react";
 import { supabase } from "../lib/supabaseClient";
 
@@ -320,6 +321,13 @@ export default function SignIn() {
             </span>
           </div>
         </form>
+      </div>
+      <div
+        className="absolute text-white flex items-center gap-4 p-4 cursor-pointer"
+        onClick={() => navigate("/")}
+      >
+        <RiArrowLeftBoxFill color="white" />
+        Back to Home
       </div>
     </div>
   );
