@@ -15,6 +15,7 @@ import Messages from "./pages/authPages/Messages.tsx";
 import Bids from "./pages/authPages/Bids.tsx";
 import Listings from "./pages/authPages/Listings.tsx";
 import CreateListing from "./pages/authPages/CreateListing.tsx";
+import Favourites from "./pages/authPages/Favourites.tsx";
 
 const router = createBrowserRouter([
   {
@@ -46,32 +47,36 @@ const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                element: <Market />
+                element: <Market />,
               },
               {
                 path: "profile",
-                element: <Profile />
+                element: <Profile />,
               },
               {
                 path: "messages",
-                element: <Messages />
+                element: <Messages />,
               },
               {
                 path: "bids",
-                element: <Bids />
+                element: <Bids />,
               },
               {
                 path: "listings",
-                element: <Listings />
+                element: <Listings />,
               },
               {
                 path: "listings/create",
-                element: <CreateListing />
-              }
-            ]
-          }
+                element: <CreateListing />,
+              },
+              {
+                path: "favourites",
+                element: <Favourites />,
+              },
+            ],
+          },
         ],
-      }
+      },
     ],
   },
 ]);

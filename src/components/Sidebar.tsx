@@ -1,4 +1,9 @@
-import { RiFileList2Fill, RiStoreFill, RiUser2Fill } from "@remixicon/react";
+import {
+  RiBookmarkFill,
+  RiFileList2Fill,
+  RiStoreFill,
+  RiUser2Fill,
+} from "@remixicon/react";
 import React from "react";
 import { type ReactNode } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -27,6 +32,11 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       name: "My Listings",
       path: "/market/listings",
       icon: <RiFileList2Fill />,
+    },
+    {
+      name: "Favourites",
+      path: "/market/favourites",
+      icon: <RiBookmarkFill />,
     },
   ];
 
