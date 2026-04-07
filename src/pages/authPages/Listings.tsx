@@ -97,7 +97,7 @@ export default function Listings() {
       return;
     }
 
-    // FIXED: Using user_id to match your profiles table
+    // Using user_id to match profiles table
     const { data: profile } = await supabase
       .from("profiles")
       .select("phone")
@@ -304,7 +304,7 @@ export default function Listings() {
             </Link>
 
             {!hasPhone && !profileLoading && (
-              <p className="text-amber-600 text-sm font-[Poppins] text-right max-w-[280px]">
+              <p className="text-amber-600 text-sm font-[Poppins] text-right max-w-70">
                 ⚠️ You must add a phone number to your profile before posting
                 listings.
               </p>

@@ -83,7 +83,7 @@ export default function SignIn() {
       }
     } else if (data.user) {
       console.log("Sign in successful:", data);
-      navigate("/market/profile");
+      navigate("/market");
     }
   }
 
@@ -135,7 +135,7 @@ export default function SignIn() {
     } else {
       console.log("Sign up successful:", data);
       setError("");
-      navigate("/market/profile");
+      navigate("/market");
     }
   }
 

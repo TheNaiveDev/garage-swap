@@ -1,6 +1,6 @@
 import Navbar from "../components/Navbar";
 import Hero from "../components/Herosection";
-import FeaturedCards from "../components/Featuredcards";
+import FeaturedCards from "../components/featuredcards";
 import HowItWorks from "../components/HowItWorks";
 import Ctasection from "../components/Ctasection";
 import Footer from "../components/Footer";

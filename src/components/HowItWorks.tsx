@@ -22,8 +22,10 @@ export default function HowItWorks() {
   return (
     <section className="px-10 md:px-20 xl:px-30 py-20 bg-white font-[Poppins]">
       <div className="text-center mb-12">
-        <h2 className="text-4xl font-bold text-slate-900">How it Works</h2>
-        <p className="text-slate-500 mt-2 max-w-sm mx-auto">
+        <h2 className="text-4xl font-bold text-slate-900 font-[Poppins]">
+          How it Works
+        </h2>
+        <p className="text-slate-500 mt-2 max-w-sm mx-auto font-[Poppins]">
           Getting started with GarageSwap is simple, secure, and
           neighborhood-focused.
         </p>

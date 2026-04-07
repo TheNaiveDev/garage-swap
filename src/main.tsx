@@ -11,11 +11,10 @@ import ProtectedRoute from "./auth/ProtectedRoute.tsx";
 import Profile from "./pages/authPages/Profile.tsx";
 import DashboardLayout from "./pages/authPages/DashboardLayout.tsx";
 import Market from "./pages/authPages/Market.tsx";
-import Messages from "./pages/authPages/Messages.tsx";
-import Bids from "./pages/authPages/Bids.tsx";
 import Listings from "./pages/authPages/Listings.tsx";
 import CreateListing from "./pages/authPages/CreateListing.tsx";
 import Favourites from "./pages/authPages/Favourites.tsx";
+import UpdatePassword from "./pages/UpdateComponent.tsx";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +38,10 @@ const router = createBrowserRouter([
         element: <ForgotPassword />,
       },
       {
+        path: "/updatepassword",
+        element: <UpdatePassword />,
+      },
+      {
         element: <ProtectedRoute />,
         children: [
           {
@@ -52,14 +55,6 @@ const router = createBrowserRouter([
               {
                 path: "profile",
                 element: <Profile />,
-              },
-              {
-                path: "messages",
-                element: <Messages />,
-              },
-              {
-                path: "bids",
-                element: <Bids />,
               },
               {
                 path: "listings",

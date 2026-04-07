@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { RiArrowLeftLine, RiKeyFill, RiMailFill } from "@remixicon/react";
 import { useNavigate } from "react-router-dom";
 import Input from "../components/shared/Input";
@@ -14,12 +14,15 @@ const ForgotPassword = () => {
   };
 
   async function handleEmailReset(email: string) {
-    const { data, error } = await supabase.auth.resetPasswordForEmail(email);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/updatepassword`,
+    });
 
-    if (data) {
-      console.log("email sent successfully");
-    } else {
+    if (error) {
       console.log(error);
+      alert(error.message);
+    } else {
+      alert("Check your email for the reset link");
     }
   }
 

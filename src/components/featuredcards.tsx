@@ -1,11 +1,12 @@
 // src/components/featuredcards.tsx
 import ItemCard from "./Itemcards";
 import items from "../items/items";
+import { useNavigate } from "react-router-dom";
 
-// Sample data — replace with fetch("/api/items/") when your Django API is ready
 const featuredItems = items;
 
 export default function FeaturedCards() {
+  const navigate = useNavigate();
   return (
     <section className="px-8 md:px-40 py-16">
       <div className="mx-auto">
@@ -18,7 +19,10 @@ export default function FeaturedCards() {
               Handpicked items trending in your local area.
             </p>
           </div>
-          <button className="text-orange-500 font-semibold text-sm hover:underline">
+          <button
+            className="text-orange-500 font-semibold text-sm hover:underline"
+            onClick={() => navigate("/market")}
+          >
             View all →
           </button>
         </div>

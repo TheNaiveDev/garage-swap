@@ -72,7 +72,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
           <span className="material-symbols-outlined font-extrabold text-[#f48c25]">
             handyman
           </span>
-          <span className="text-xl lg:text-2xl font-bold text-white">
+          <span className="text-xl lg:text-2xl font-bold text-white hover:text-[#f48c25]">
             GarageSwap
           </span>
         </span>

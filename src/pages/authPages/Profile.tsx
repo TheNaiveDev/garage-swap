@@ -33,7 +33,7 @@ const Profile = () => {
       return;
     }
 
-    setEmail(user.email || "")
+    setEmail(user.email || "");
 
     const { data: profile } = await supabase
       .from("profiles")
@@ -51,15 +51,15 @@ const Profile = () => {
   };
 
   const handleSavePhone = async () => {
-  // Validate phone number before saving
-  if (phone.trim() && !/^\+?[\d\s]{7,15}$/.test(phone.trim())) {
-    setError("Please enter a valid phone number e.g. +233 24 123 4567")
-    return
-  }
+    // Validate Ghanaian phone numbers only
+    if (phone.trim() && !/^\+233[235]\d{8}$/.test(phone.replace(/\s/g, ""))) {
+      setError("Please enter a valid Ghanaian number e.g. +233 24 123 4567");
+      return;
+    }
 
-  setSaving(true)
-  setError(null)
-  setSaveSuccess(false)
+    setSaving(true);
+    setError(null);
+    setSaveSuccess(false);
 
     const {
       data: { user },
@@ -90,8 +90,6 @@ const Profile = () => {
   };
 
   const hasPhoneChanged = phone.trim() !== originalPhone.trim();
-
-  
 
   return (
     <section className="w-full max-w-4xl flex justify-center flex-col gap-12 mx-auto px-4 sm:px-8 py-10">
@@ -142,12 +140,10 @@ const Profile = () => {
             <input
               type="tel"
               value={phone}
-              onChange={(e) => 
-                {
-                  const val = e.target.value.replace(/[^\d+\s]/g, "")
-                  setPhone(val)
-
-                }}
+              onChange={(e) => {
+                const val = e.target.value.replace(/[^\d+\s]/g, "");
+                setPhone(val);
+              }}
               className="shadow-xs focus:outline outline-[#F48C25] border border-slate-300 rounded-md px-3 py-2.5 w-full font-[Poppins]"
               placeholder="+233 24 123 4567"
             />
@@ -181,7 +177,7 @@ const Profile = () => {
             {error && <p className="text-red-600 text-sm mt-1">{error}</p>}
 
             <p className="text-xs text-slate-500 mt-1">
-              Phone number is required to create listings
+              Ghanaian numbers only e.g. +233 24 123 4567
             </p>
           </div>
 
@@ -196,10 +192,10 @@ const Profile = () => {
                 color="#31415880"
               />
               <input
-              type="text"
-              className="shadow-xs outline-none border border-slate-300 rounded-md px-3 py-2.5 w-full font-[Poppins] text-slate-700 bg-slate-100 cursor-not-allowed"
-              value={email}
-              disabled
+                type="text"
+                className="shadow-xs outline-none border border-slate-300 rounded-md px-3 py-2.5 w-full font-[Poppins] text-slate-700 bg-slate-100 cursor-not-allowed"
+                value={email}
+                disabled
               />
             </div>
           </div>
