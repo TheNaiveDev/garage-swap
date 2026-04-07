@@ -1,14 +1,9 @@
-import {
-  RiFileList2Fill,
-  RiMessage2Fill,
-  RiStoreFill,
-  RiUser2Fill,
-} from "@remixicon/react";
-import { Gavel } from "lucide-react";
+import { RiFileList2Fill, RiStoreFill, RiUser2Fill } from "@remixicon/react";
 import React from "react";
 import { type ReactNode } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import BtnBig from "./shared/BtnBig";
+import { supabase } from "../lib/supabaseClient";
 
 interface linkProps {
   name: string;
@@ -34,6 +29,12 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       icon: <RiFileList2Fill />,
     },
   ];
+
+  // sign out function
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    navigate("/");
+  };
 
   return (
     <>
@@ -93,6 +94,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             text="Sign Out"
             btnBg="bg-[#64748b20]"
             textColor="text-white"
+            onsubmit={handleSignOut}
           />
         </div>
       </div>

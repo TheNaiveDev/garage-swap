@@ -194,9 +194,9 @@ export default function Market() {
 
         <div className="w-full h-0.5 bg-slate-200" />
 
-        {/* Search + Filter */}
-        <div className="flex flex-col gap-4">
-          <div className="relative">
+        {/* Search + Filter — sticky */}
+        <div className="sticky top-0 z-10 bg-white/95 backdrop-blur-sm pt-4 pb-4 -mx-4 px-4 sm:-mx-8 sm:px-8 border-b border-slate-100">
+          <div className="relative mb-3">
             <RiSearchLine
               className="absolute left-3 top-1/2 -translate-y-1/2"
               color="#94a3b8"
@@ -210,18 +210,17 @@ export default function Market() {
               className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-md shadow-xs focus:outline outline-[#F48C25] font-[Poppins] text-slate-700 text-sm"
             />
           </div>
-
           <div className="flex gap-2 flex-wrap">
             {CATEGORIES.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
                 className={`font-[Poppins] text-xs px-4 py-1.5 rounded-full border transition-colors duration-150 cursor-pointer
-                  ${
-                    activeCategory === cat
-                      ? "bg-[#F48C25] border-[#F48C25] text-white"
-                      : "bg-white border-slate-300 text-slate-600 hover:border-[#F48C25] hover:text-[#F48C25]"
-                  }`}
+          ${
+            activeCategory === cat
+              ? "bg-[#F48C25] border-[#F48C25] text-white"
+              : "bg-white border-slate-300 text-slate-600 hover:border-[#F48C25] hover:text-[#F48C25]"
+          }`}
               >
                 {cat}
               </button>

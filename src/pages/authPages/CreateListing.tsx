@@ -20,7 +20,7 @@ const CATEGORIES = [
   "Other",
 ];
 const CONDITIONS = [
-  { value: "like_new", label: "Like New" },
+  { value: "new", label: "new" },
   { value: "good", label: "Good" },
   { value: "fair", label: "Fair" },
 ];
