@@ -4,11 +4,13 @@ import Button from "./shared/Button";
 import Input from "./shared/Input";
 import { RiSearchLine, RiMenuLine, RiCloseLine } from "@remixicon/react";
 import { supabase } from "../lib/supabaseClient";
+import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   // Hide Navbar on these pages
   const hideNavbarPaths = ["/sign-in", "/forgotpassword"];
@@ -19,15 +21,17 @@ export default function Navbar() {
   // Check auth state on mount and listen for changes
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setIsLoggedIn(!!session)
-    })
+      setIsLoggedIn(!!session);
+    });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setIsLoggedIn(!!session)
-    })
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsLoggedIn(!!session);
+    });
 
-    return () => subscription.unsubscribe()
-  }, [])
+    return () => subscription.unsubscribe();
+  }, []);
 
   if (isAuthPage) return null;
 
@@ -36,7 +40,10 @@ export default function Navbar() {
       {/* Main bar */}
       <div className="flex items-center justify-between px-6 md:px-40 py-4">
         {/* Logo */}
-        <span className="flex items-center gap-2 shrink-0">
+        <span
+          className="flex items-center gap-2 shrink-0"
+          onClick={() => navigate("/")}
+        >
           <span className="material-symbols-outlined font-extrabold text-[#f48c25]">
             handyman
           </span>
@@ -47,28 +54,58 @@ export default function Navbar() {
 
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-8">
-          <Link to="/market" className="text-slate-700 font-medium hover:text-[#F48C25] transition-colors">Browse</Link>
-          <Link to="/how-it-works" className="text-slate-700 font-medium hover:text-[#F48C25] transition-colors">How it Works</Link>
-          <Link to="/market/listings" className="text-slate-700 font-medium hover:text-[#F48C25] transition-colors">Start Selling</Link>
+          <Link
+            to="/market"
+            className="text-slate-700 font-medium hover:text-[#F48C25] transition-colors"
+          >
+            Browse
+          </Link>
+          <Link
+            to="/how-it-works"
+            className="text-slate-700 font-medium hover:text-[#F48C25] transition-colors"
+          >
+            How it Works
+          </Link>
+          <Link
+            to="/market/listings"
+            className="text-slate-700 font-medium hover:text-[#F48C25] transition-colors"
+          >
+            Start Selling
+          </Link>
         </div>
 
         {/* Desktop right side */}
         <div className="hidden md:flex flex-row items-center gap-4 lg:gap-8">
-          <Input placeholder="Search for an item" icon={<RiSearchLine color="#F48C25" />} />
+          <Input
+            placeholder="Search for an item"
+            icon={<RiSearchLine color="#F48C25" />}
+          />
 
           {isLoggedIn ? (
             // Logged in — show Go to Dashboard
             <Link to="/market">
-              <Button text="Dashboard" btnBg="bg-[#F48C25]" textColor="text-white" />
+              <Button
+                text="Dashboard"
+                btnBg="bg-[#F48C25]"
+                textColor="text-white"
+              />
             </Link>
           ) : (
             // Logged out — show Sign In + Sign Up
             <>
               <Link to="/sign-in">
-                <Button text="Sign In" btnBg="bg-[#F48C2510]" textColor="text-[#F48C25]" />
+                <Button
+                  text="Sign In"
+                  btnBg="bg-[#F48C2510]"
+                  textColor="text-[#F48C25]"
+                />
               </Link>
               <Link to="/sign-in">
-                <Button text="Sign Up" btnBg="bg-[#F48C25]" textColor="text-white" />
+                <Button
+                  text="Sign Up"
+                  btnBg="bg-[#F48C25]"
+                  textColor="text-white"
+                />
               </Link>
             </>
           )}
@@ -78,11 +115,19 @@ export default function Navbar() {
         <div className="md:hidden flex items-center gap-3">
           {isLoggedIn ? (
             <Link to="/market">
-              <Button text="Dashboard" btnBg="bg-[#F48C25]" textColor="text-white" />
+              <Button
+                text="Dashboard"
+                btnBg="bg-[#F48C25]"
+                textColor="text-white"
+              />
             </Link>
           ) : (
             <Link to="/sign-in">
-              <Button text="Sign Up" btnBg="bg-[#F48C25]" textColor="text-white" />
+              <Button
+                text="Sign Up"
+                btnBg="bg-[#F48C25]"
+                textColor="text-white"
+              />
             </Link>
           )}
           <button
@@ -99,27 +144,72 @@ export default function Navbar() {
       {menuOpen && (
         <div className="md:hidden border-t border-orange-100 bg-[#f5f0e8] px-6 pb-5 flex flex-col gap-4">
           <div className="pt-4">
-            <Input placeholder="Search for an item" icon={<RiSearchLine color="#F48C25" />} />
+            <Input
+              placeholder="Search for an item"
+              icon={<RiSearchLine color="#F48C25" />}
+            />
           </div>
 
           <div className="flex flex-col">
-            <Link to="/" className="text-slate-700 font-medium py-3 px-1 border-b border-orange-100 hover:text-[#F48C25] transition-colors" onClick={() => setMenuOpen(false)}>Browse</Link>
-            <Link to="/how-it-works" className="text-slate-700 font-medium py-3 px-1 border-b border-orange-100 hover:text-[#F48C25] transition-colors" onClick={() => setMenuOpen(false)}>How it Works</Link>
-            <Link to="/" className="text-slate-700 font-medium py-3 px-1 hover:text-[#F48C25] transition-colors" onClick={() => setMenuOpen(false)}>Start Selling</Link>
+            <Link
+              to="/"
+              className="text-slate-700 font-medium py-3 px-1 border-b border-orange-100 hover:text-[#F48C25] transition-colors"
+              onClick={() => setMenuOpen(false)}
+            >
+              Browse
+            </Link>
+            <Link
+              to="/how-it-works"
+              className="text-slate-700 font-medium py-3 px-1 border-b border-orange-100 hover:text-[#F48C25] transition-colors"
+              onClick={() => setMenuOpen(false)}
+            >
+              How it Works
+            </Link>
+            <Link
+              to="/"
+              className="text-slate-700 font-medium py-3 px-1 hover:text-[#F48C25] transition-colors"
+              onClick={() => setMenuOpen(false)}
+            >
+              Start Selling
+            </Link>
           </div>
 
           <div className="flex gap-3 pt-1">
             {isLoggedIn ? (
-              <Link to="/market" className="flex-1" onClick={() => setMenuOpen(false)}>
-                <Button text="Dashboard" btnBg="bg-[#F48C25]" textColor="text-white" />
+              <Link
+                to="/market"
+                className="flex-1"
+                onClick={() => setMenuOpen(false)}
+              >
+                <Button
+                  text="Dashboard"
+                  btnBg="bg-[#F48C25]"
+                  textColor="text-white"
+                />
               </Link>
             ) : (
               <>
-                <Link to="/sign-in" className="flex-1" onClick={() => setMenuOpen(false)}>
-                  <Button text="Sign In" btnBg="bg-[#F48C2510]" textColor="text-[#F48C25]" />
+                <Link
+                  to="/sign-in"
+                  className="flex-1"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <Button
+                    text="Sign In"
+                    btnBg="bg-[#F48C2510]"
+                    textColor="text-[#F48C25]"
+                  />
                 </Link>
-                <Link to="/sign-in" className="flex-1" onClick={() => setMenuOpen(false)}>
-                  <Button text="Sign Up" btnBg="bg-[#F48C25]" textColor="text-white" />
+                <Link
+                  to="/sign-in"
+                  className="flex-1"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <Button
+                    text="Sign Up"
+                    btnBg="bg-[#F48C25]"
+                    textColor="text-white"
+                  />
                 </Link>
               </>
             )}
