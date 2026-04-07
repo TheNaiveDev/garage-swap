@@ -55,7 +55,10 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
           lg:relative lg:translate-x-0 lg:z-auto
         `}
       >
-        <span className="flex items-center gap-2 shrink-0">
+        <span
+          className="flex items-center gap-2 shrink-0 cursor-pointer"
+          onClick={() => navigate("/")}
+        >
           <span className="material-symbols-outlined font-extrabold text-[#f48c25]">
             handyman
           </span>

@@ -138,9 +138,10 @@ export default function SignIn() {
     }
   }
 
-  // Form Submit Handler
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  // handle password visibility function
+  function handlePasswordVisibility() {
+    setIsPassword(!isPassword);
+  }
 
     if (isSignUp) {
       handleSignUp(email, password, username);

@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Button from "./shared/Button";
 import Input from "./shared/Input";
 import { RiSearchLine, RiMenuLine, RiCloseLine } from "@remixicon/react";
+import { supabase } from "../lib/supabaseClient";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const location = useLocation();
 
   // Hide Navbar on these pages
@@ -13,6 +15,19 @@ export default function Navbar() {
   const isAuthPage =
     hideNavbarPaths.includes(location.pathname) ||
     location.pathname.startsWith("/market");
+
+  // Check auth state on mount and listen for changes
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setIsLoggedIn(!!session)
+    })
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsLoggedIn(!!session)
+    })
+
+    return () => subscription.unsubscribe()
+  }, [])
 
   if (isAuthPage) return null;
 
@@ -32,57 +47,44 @@ export default function Navbar() {
 
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-8">
-          <Link
-            to="/"
-            className="text-slate-700 font-medium hover:text-[#F48C25] transition-colors"
-          >
-            Browse
-          </Link>
-          <Link
-            to="/how-it-works"
-            className="text-slate-700 font-medium hover:text-[#F48C25] transition-colors"
-          >
-            How it Works
-          </Link>
-          <Link
-            to="/"
-            className="text-slate-700 font-medium hover:text-[#F48C25] transition-colors"
-          >
-            Start Selling
-          </Link>
+          <Link to="/market" className="text-slate-700 font-medium hover:text-[#F48C25] transition-colors">Browse</Link>
+          <Link to="/how-it-works" className="text-slate-700 font-medium hover:text-[#F48C25] transition-colors">How it Works</Link>
+          <Link to="/market/listings" className="text-slate-700 font-medium hover:text-[#F48C25] transition-colors">Start Selling</Link>
         </div>
 
         {/* Desktop right side */}
         <div className="hidden md:flex flex-row items-center gap-4 lg:gap-8">
-          <Input
-            placeholder="Search for an item"
-            icon={<RiSearchLine color="#F48C25" />}
-          />
-          <Link to="/sign-in">
-            <Button
-              text="Sign In"
-              btnBg="bg-[#F48C2510]"
-              textColor="text-[#F48C25]"
-            />
-          </Link>
-          <Link to="/sign-in">
-            <Button
-              text="Sign Up"
-              btnBg="bg-[#F48C25]"
-              textColor="text-white"
-            />
-          </Link>
+          <Input placeholder="Search for an item" icon={<RiSearchLine color="#F48C25" />} />
+
+          {isLoggedIn ? (
+            // Logged in — show Go to Dashboard
+            <Link to="/market">
+              <Button text="Dashboard" btnBg="bg-[#F48C25]" textColor="text-white" />
+            </Link>
+          ) : (
+            // Logged out — show Sign In + Sign Up
+            <>
+              <Link to="/sign-in">
+                <Button text="Sign In" btnBg="bg-[#F48C2510]" textColor="text-[#F48C25]" />
+              </Link>
+              <Link to="/sign-in">
+                <Button text="Sign Up" btnBg="bg-[#F48C25]" textColor="text-white" />
+              </Link>
+            </>
+          )}
         </div>
 
         {/* Mobile: Sign Up button + Hamburger */}
         <div className="md:hidden flex items-center gap-3">
-          <Link to="/sign-in">
-            <Button
-              text="Sign Up"
-              btnBg="bg-[#F48C25]"
-              textColor="text-white"
-            />
-          </Link>
+          {isLoggedIn ? (
+            <Link to="/market">
+              <Button text="Dashboard" btnBg="bg-[#F48C25]" textColor="text-white" />
+            </Link>
+          ) : (
+            <Link to="/sign-in">
+              <Button text="Sign Up" btnBg="bg-[#F48C25]" textColor="text-white" />
+            </Link>
+          )}
           <button
             className="p-1.5 rounded-md text-slate-700 hover:bg-orange-100 transition-colors"
             onClick={() => setMenuOpen(!menuOpen)}
@@ -97,59 +99,30 @@ export default function Navbar() {
       {menuOpen && (
         <div className="md:hidden border-t border-orange-100 bg-[#f5f0e8] px-6 pb-5 flex flex-col gap-4">
           <div className="pt-4">
-            <Input
-              placeholder="Search for an item"
-              icon={<RiSearchLine color="#F48C25" />}
-            />
+            <Input placeholder="Search for an item" icon={<RiSearchLine color="#F48C25" />} />
           </div>
 
           <div className="flex flex-col">
-            <Link
-              to="/"
-              className="text-slate-700 font-medium py-3 px-1 border-b border-orange-100 hover:text-[#F48C25] transition-colors"
-              onClick={() => setMenuOpen(false)}
-            >
-              Browse
-            </Link>
-            <Link
-              to="/how-it-works"
-              className="text-slate-700 font-medium py-3 px-1 border-b border-orange-100 hover:text-[#F48C25] transition-colors"
-              onClick={() => setMenuOpen(false)}
-            >
-              How it Works
-            </Link>
-            <Link
-              to="/"
-              className="text-slate-700 font-medium py-3 px-1 hover:text-[#F48C25] transition-colors"
-              onClick={() => setMenuOpen(false)}
-            >
-              Start Selling
-            </Link>
+            <Link to="/" className="text-slate-700 font-medium py-3 px-1 border-b border-orange-100 hover:text-[#F48C25] transition-colors" onClick={() => setMenuOpen(false)}>Browse</Link>
+            <Link to="/how-it-works" className="text-slate-700 font-medium py-3 px-1 border-b border-orange-100 hover:text-[#F48C25] transition-colors" onClick={() => setMenuOpen(false)}>How it Works</Link>
+            <Link to="/" className="text-slate-700 font-medium py-3 px-1 hover:text-[#F48C25] transition-colors" onClick={() => setMenuOpen(false)}>Start Selling</Link>
           </div>
 
           <div className="flex gap-3 pt-1">
-            <Link
-              to="/sign-in"
-              className="flex-1"
-              onClick={() => setMenuOpen(false)}
-            >
-              <Button
-                text="Sign In"
-                btnBg="bg-[#F48C2510]"
-                textColor="text-[#F48C25]"
-              />
-            </Link>
-            <Link
-              to="/sign-in"
-              className="flex-1"
-              onClick={() => setMenuOpen(false)}
-            >
-              <Button
-                text="Sign Up"
-                btnBg="bg-[#F48C25]"
-                textColor="text-white"
-              />
-            </Link>
+            {isLoggedIn ? (
+              <Link to="/market" className="flex-1" onClick={() => setMenuOpen(false)}>
+                <Button text="Dashboard" btnBg="bg-[#F48C25]" textColor="text-white" />
+              </Link>
+            ) : (
+              <>
+                <Link to="/sign-in" className="flex-1" onClick={() => setMenuOpen(false)}>
+                  <Button text="Sign In" btnBg="bg-[#F48C2510]" textColor="text-[#F48C25]" />
+                </Link>
+                <Link to="/sign-in" className="flex-1" onClick={() => setMenuOpen(false)}>
+                  <Button text="Sign Up" btnBg="bg-[#F48C25]" textColor="text-white" />
+                </Link>
+              </>
+            )}
           </div>
         </div>
       )}

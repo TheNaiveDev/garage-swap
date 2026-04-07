@@ -8,6 +8,7 @@ const Profile = () => {
 
   // States
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [originalPhone, setOriginalPhone] = useState("");
   const [loading, setLoading] = useState(true);
@@ -32,6 +33,8 @@ const Profile = () => {
       return;
     }
 
+    setEmail(user.email || "")
+
     const { data: profile } = await supabase
       .from("profiles")
       .select("username, phone")
@@ -48,9 +51,15 @@ const Profile = () => {
   };
 
   const handleSavePhone = async () => {
-    setSaving(true);
-    setError(null);
-    setSaveSuccess(false);
+  // Validate phone number before saving
+  if (phone.trim() && !/^\+?[\d\s]{7,15}$/.test(phone.trim())) {
+    setError("Please enter a valid phone number e.g. +233 24 123 4567")
+    return
+  }
+
+  setSaving(true)
+  setError(null)
+  setSaveSuccess(false)
 
     const {
       data: { user },
@@ -81,6 +90,8 @@ const Profile = () => {
   };
 
   const hasPhoneChanged = phone.trim() !== originalPhone.trim();
+
+  
 
   return (
     <section className="w-full max-w-4xl flex justify-center flex-col gap-12 mx-auto px-4 sm:px-8 py-10">
@@ -131,7 +142,12 @@ const Profile = () => {
             <input
               type="tel"
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              onChange={(e) => 
+                {
+                  const val = e.target.value.replace(/[^\d+\s]/g, "")
+                  setPhone(val)
+
+                }}
               className="shadow-xs focus:outline outline-[#F48C25] border border-slate-300 rounded-md px-3 py-2.5 w-full font-[Poppins]"
               placeholder="+233 24 123 4567"
             />
@@ -180,10 +196,10 @@ const Profile = () => {
                 color="#31415880"
               />
               <input
-                type="text"
-                className="shadow-xs outline-none border border-slate-300 rounded-md px-3 py-2.5 w-full font-[Poppins] text-slate-700 bg-slate-100 cursor-not-allowed"
-                value="myemail@email.com"
-                disabled
+              type="text"
+              className="shadow-xs outline-none border border-slate-300 rounded-md px-3 py-2.5 w-full font-[Poppins] text-slate-700 bg-slate-100 cursor-not-allowed"
+              value={email}
+              disabled
               />
             </div>
           </div>
