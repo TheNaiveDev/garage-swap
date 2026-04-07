@@ -47,7 +47,7 @@ export default function SignIn() {
       console.log("sorry, ", error);
     } else {
       console.log(data);
-      navigate("/market/profile");
+      navigate("/");
     }
   }
 
@@ -73,7 +73,7 @@ export default function SignIn() {
       return;
     } else {
       console.log("Signup successful! Profile created via trigger.");
-      navigate("/profile");
+      navigate("/market/profile");
     }
   }
 

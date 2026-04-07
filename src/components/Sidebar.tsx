@@ -9,6 +9,7 @@ import React from "react";
 import { type ReactNode } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import BtnBig from "./shared/BtnBig";
+import { supabase } from "../lib/supabaseClient"
 
 interface linkProps {
   name: string;
@@ -54,14 +55,17 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
           lg:relative lg:translate-x-0 lg:z-auto
         `}
       >
-        <span className="flex items-center gap-2 shrink-0">
-          <span className="material-symbols-outlined font-extrabold text-[#f48c25]">
-            handyman
-          </span>
-          <span className="text-xl lg:text-2xl font-bold text-white">
-            GarageSwap
-          </span>
-        </span>
+        <span
+  className="flex items-center gap-2 shrink-0 cursor-pointer"
+  onClick={() => navigate("/")}
+>
+  <span className="material-symbols-outlined font-extrabold text-[#f48c25]">
+    handyman
+  </span>
+  <span className="text-xl lg:text-2xl font-bold text-white">
+    GarageSwap
+  </span>
+</span>
         <div className="flex flex-col gap-8">
           {links.map((link) => {
             const isActive = location.pathname === link.path;
@@ -88,13 +92,17 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             );
           })}
         </div>
-        <div className="flex-1 flex flex-col justify-end hover:font-medium">
-          <BtnBig
-            text="Sign Out"
-            btnBg="bg-[#64748b20]"
-            textColor="text-white"
-          />
-        </div>
+        <div className="flex-1 flex flex-col justify-end">
+  <button
+    onClick={async () => {
+      await supabase.auth.signOut()
+      navigate("/")
+    }}
+    className="w-full bg-[#64748b20] text-white font-medium py-3 px-4 rounded-md hover:bg-[#64748b40] transition-colors"
+  >
+    Sign Out
+  </button>
+</div>
       </div>
     </>
   );
